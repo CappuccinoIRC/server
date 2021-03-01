@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Application-Name: Cappuccino
+Application-Version: 1.0
+Main-Class: io.cappuccino.server.Main
