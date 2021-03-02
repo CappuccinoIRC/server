@@ -1,4 +1,4 @@
-package io.cappuccino.server;
+package org.cappuccino_irc.server;
 
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;

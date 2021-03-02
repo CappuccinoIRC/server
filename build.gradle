@@ -1,8 +1,10 @@
 plugins {
     id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '5.2.0'
 }
 
-group 'io.cappuccino'
+group 'org.cappuccino-irc'
 version '1.0-SNAPSHOT'
 
 java.sourceCompatibility = JavaVersion.VERSION_11
@@ -14,4 +16,25 @@ repositories {
 
 dependencies {
     compile "org.java-websocket:Java-WebSocket:1.5.1"
+    compile "org.slf4j:slf4j-api:1.7.30"
+    implementation "org.slf4j:slf4j-simple:1.7.30"
 }
+
+jar {
+    manifest {
+        attributes (
+            'Main-Class': 'org.cappuccino_irc.server.Main'
+        )
+    }
+
+    dependsOn('dependencies')
+}
+
+shadowJar {
+    archiveBaseName.set(rootProject.name)
+    archiveClassifier.set('')
+    archiveVersion.set('')
+    minimize()
+}
+
+tasks.build.dependsOn tasks.shadowJar
