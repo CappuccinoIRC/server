@@ -5,12 +5,13 @@ plugins {
 group 'io.cappuccino'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = 1.8
+java.sourceCompatibility = JavaVersion.VERSION_11
+java.targetCompatibility = JavaVersion.VERSION_11
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile "org.java-websocket:Java-WebSocket:1.5.1"
 }
