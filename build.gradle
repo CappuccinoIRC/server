@@ -1,0 +1,10 @@
+plugins {
+    id 'java'
+}
+
+group 'org.cappuccino-irc'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
