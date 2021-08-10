@@ -41,20 +41,34 @@ public final class Main {
                     matcher = Pattern.compile("Sec-WebSocket-Key: (.*)").matcher(data);
 
                     if (matcher.find()) {
-                        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                        final DataOutputStream daos = new DataOutputStream(baos);
-
-                        daos.writeUTF("HTTP/1.1 101 Switching Protocols\r\n");
-                        daos.writeUTF("Connection: Upgrade\r\n");
-                        daos.writeUTF("Upgrade: websocket\r\n");
-                        daos.writeUTF("Sec-WebSocket-Accept: " + Base64.getEncoder().encodeToString(
-                                        MessageDigest.getInstance("SHA-1").digest(
-                                                (matcher.group(1) + "258EAFA5-E914-47DA-95CA-C5AB0DC85B11").getBytes(StandardCharsets.UTF_8)
-                                        )
+                        final StringBuilder sb = new StringBuilder();
+                        sb.append("HTTP/1.1 101 Switching Protocols\r\n");
+                        sb.append("Connection: Upgrade\r\n");
+                        sb.append("Upgrade: websocket\r\n");
+                        sb.append("Sec-WebSocket-Accept: ").append(Base64.getEncoder().encodeToString(
+                                MessageDigest.getInstance("SHA-1").digest(
+                                        (matcher.group(1) + "258EAFA5-E914-47DA-95CA-C5AB0DC85B11").getBytes(StandardCharsets.UTF_8)
                                 )
-                        );
-                        daos.writeUTF("\r\n\r\n");
-                        out.write(baos.toByteArray());
+                        ));
+                        sb.append("\r\n\r\n");
+
+                        byte[] response = sb.toString().getBytes(StandardCharsets.UTF_8);
+                        out.write(response, 0, response.length);
+
+//                        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//                        final DataOutputStream daos = new DataOutputStream(baos);
+//
+//                        daos.writeUTF("HTTP/1.1 101 Switching Protocols\r\n");
+//                        daos.writeUTF("Connection: Upgrade\r\n");
+//                        daos.writeUTF("Upgrade: websocket\r\n");
+//                        daos.writeUTF("Sec-WebSocket-Accept: " + Base64.getEncoder().encodeToString(
+//                                        MessageDigest.getInstance("SHA-1").digest(
+//                                                (matcher.group(1) + "258EAFA5-E914-47DA-95CA-C5AB0DC85B11").getBytes(StandardCharsets.UTF_8)
+//                                        )
+//                                )
+//                        );
+//                        daos.writeUTF("\r\n\r\n");
+//                        out.write(baos.toByteArray());
                     }
                 }
             }
